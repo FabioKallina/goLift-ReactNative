@@ -40,6 +40,10 @@ const SetCard = ({ exercise, sets, onUpdateSets, onRemove }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>{exercise.name}</Text>
+            
+            <TouchableOpacity style={styles.closeExerciseBtn} onPress={onRemove}>
+                <Ionicons name="close" size={30} color="rgb(255, 0, 0)" />
+            </TouchableOpacity>
 
             <SwipeListView
                 data={sets}
@@ -98,8 +102,8 @@ const SetCard = ({ exercise, sets, onUpdateSets, onRemove }) => {
                 previewOpenValue={-80}        // Optional: how much to preview open
                 previewOpenDelay={1000}       // Optional: delay before preview shows
                 disableRightSwipe={true}      // Only allow left swipe
-                friction={15}                 // Makes swipe slower/smoother
-                tension={20}                  // Adds resistance to swipe
+                friction={10}                 // Makes swipe slower/smoother
+                tension={10}                  // Adds resistance to swipe
                 stopRightSwipe={-70}          // Prevent over-swiping
                 closeOnRowPress={true}       // Don't auto-close on press
                 closeOnRowOpen={false}        // Keeps row open until manually closed
@@ -110,9 +114,6 @@ const SetCard = ({ exercise, sets, onUpdateSets, onRemove }) => {
                 <Ionicons name="add" size={28} color="#FF9500" style={{ alignSelf: "center" }} />
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.removeExerciseBtn} onPress={onRemove}>
-                <Text style={{ color: "#E34234", alignSelf: "center", fontSize: 22 }}>Remove Exercise</Text>
-            </TouchableOpacity>
         </View>
     )
 }
@@ -132,6 +133,13 @@ const styles = StyleSheet.create({
         fontWeight: "semibold",
         marginVertical: 15,
         marginLeft: 10,
+    },
+    closeExerciseBtn: {
+        position: "absolute",
+        top: 15,
+        right: 10,
+        backgroundColor: "rgba(255, 0, 0, 0.3)",
+        borderRadius: 5,
     },
     inputPair: {
         flexDirection: "row",
@@ -187,6 +195,7 @@ const styles = StyleSheet.create({
         width: "80%",
         borderRadius: 20,
         marginTop: 10,
+        marginBottom: 10,
     },
     removeExerciseBtn: {
         backgroundColor: "#333",
@@ -211,10 +220,10 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     deleteButton: {
-        backgroundColor: '#E34234',
+        backgroundColor: "#E34234",
         width: "100%",
-        height: '90%',
-        alignItems: 'flex-end',
+        height: "100%",
+        alignItems: "flex-end",
         justifyContent: "center",
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5,

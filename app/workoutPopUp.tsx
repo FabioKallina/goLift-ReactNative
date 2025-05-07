@@ -112,7 +112,7 @@ const WorkoutPopUp = () => {
         <View style={styles.overlay}>
             <Text style={styles.headerText}>Workout Started</Text>
 
-            <View style={{ flexDirection: "row", gap: 10 }}>
+            <View style={{ flexDirection: "row", gap: 10, paddingBottom: 20 }}>
                 <Ionicons name="timer-outline" size={26} style={{ color: "#fff", marginLeft: 15 }} />
                 <Text style={{ color: "#fff", fontSize: 20 }}>
                     {formatTime(timeElapsed)}

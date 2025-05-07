@@ -1,7 +1,8 @@
-import { ScrollView, StyleSheet, Text, View, TouchableOpacity } from 'react-native'
+import { ScrollView, StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native'
 import React from 'react'
 
 import { useRouter } from 'expo-router'
+import { Ionicons } from '@expo/vector-icons';
 
 const router = useRouter();
 
@@ -42,6 +43,13 @@ const WorkoutSummary = ({ summary, date, timeElapsed, onClose }: WorkoutSummaryP
     return (
         <View style={styles.overlay}>
             <View style={styles.popup}>
+
+                <View style={styles.imgContainer}>
+                    <Image source={require("@/assets/images/stars.png")} resizeMode="contain" style={styles.headerImg}/>
+                    <Text style={{color: "#fff", fontSize: 18 }}>Congratulations on completing</Text>
+                    <Text style={{color: "#fff", fontSize: 18 }}>your workout!</Text>
+                </View>
+
                 <Text style={styles.header}>WorkoutSummary</Text>
                 <Text style={styles.subheader}>{formatDate(date)}</Text>
                 <Text style={styles.subheader}>Duration: {formatTime(timeElapsed)} min</Text>
@@ -52,7 +60,7 @@ const WorkoutSummary = ({ summary, date, timeElapsed, onClose }: WorkoutSummaryP
                             <Text style={styles.exerciseName}>{exercise.name}</Text>
                             {exercise.sets.map((set, i) => (
                                 <Text key={i} style={styles.setText}>
-                                    {i + 1} - {set.weight}lbs x {set.reps} reps
+                                    {set.weight}lbs x {set.reps} reps
                                 </Text>
                             ))}
                         </View>
@@ -60,8 +68,9 @@ const WorkoutSummary = ({ summary, date, timeElapsed, onClose }: WorkoutSummaryP
                 </ScrollView>
 
                 <TouchableOpacity onPress={() => { onClose(); router.push("/history"); }} style={styles.closeBtn}>
-                    <Text style={styles.closeText}>Close</Text>
+                    <Ionicons name="close" size={32} color="#fff"/>
                 </TouchableOpacity>
+
             </View>
         </View>
     )
@@ -78,22 +87,31 @@ const styles = StyleSheet.create({
     },
     popup: {
         position: "absolute",
-        top: "10%",
+        top: "5%",
         backgroundColor: "#111",
         borderRadius: 16,
         padding: 20,
         width: "90%",
-        maxHeight: "80%",
+        maxHeight: "90%",
+    },
+    imgContainer: {
+        justifyContent: "center",
+        alignItems: "center",
+        marginBottom: 30,
+        marginTop: 10,
+    },
+    headerImg: {
+        height: 90,
+        marginBottom: 20,
     },
     header: {
         color: "#fff",
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: "bold",
-        marginBottom: 10,
+        marginBottom: 5,
     },
     subheader: {
         color: "#ccc",
-        marginBottom: 5,
         fontSize: 16,
     },
     summaryList: {
@@ -105,20 +123,17 @@ const styles = StyleSheet.create({
     exerciseName: {
         color: "#FF9500",
         fontWeight: "bold",
-        fontSize: 20,
+        fontSize: 18,
         marginTop: 10,
     },
     setText: {
         color: "#fff",
-        marginTop: 10,
-        fontSize: 18,
+        marginTop: 5,
+        fontSize: 16,
     },
     closeBtn: {
         marginTop: 20,
         alignSelf: "center",
-        backgroundColor: "rgba(255, 149, 0, 0.3)",
-        borderRadius: 10,
-        paddingHorizontal: 20,
         paddingVertical: 10,
     },
     closeText: {

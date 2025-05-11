@@ -2,7 +2,10 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-nati
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+
 const History = () => {
+
+
   const [history, setHistory] = useState([]);
 
   useEffect(() => {

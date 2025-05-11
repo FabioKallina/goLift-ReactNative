@@ -1,4 +1,4 @@
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Image, ImageBackground, Button } from "react-native";
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Image, ImageBackground, Button, BackHandler } from "react-native";
 import { useState } from "react";
 
 import { icons } from '@/constants/icons';
@@ -21,52 +21,48 @@ export default function Index() {
   return (
     <ScrollView style={{ flex: 1 }} bounces={false}>
 
-      <ImageBackground source={require("@/assets/images/cloud-bg.jpg")} style={{ flex: 1 }} resizeMode="cover">
+        <View style={styles.container}>
 
-    <View style={styles.container}>
+          <Text style={styles.headerText}>Go Lift</Text>
+          <Image source={icons.gym} style={styles.logo} />
 
-      <Text style={styles.headerText}>Go Lift</Text>
-      <Image source={icons.gym} style={styles.logo}/>
+          {/* Muscle group buttons*/}
+          <View style={styles.groupButtons}>
+            {muscleGroups.map(group => (
+              <TouchableOpacity
+              key={group}
+              style={[
+                styles.groupBtn,
+                selectedGroup === group && styles.activeGroupBtn, 
+               ]}
+                onPress={() => {
+                  setSelectedGroup(group);
+                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+                }}
+              >
+                <Text style={[styles.groupBtnText, selectedGroup === group && styles.activeGroupText]}>{group}</Text>
+              </TouchableOpacity>
+            ))}
+          </View>
 
-      {/* Muscle group buttons*/}
-      <View style={styles.groupButtons}>
-        {muscleGroups.map(group => (
-          <TouchableOpacity
-            key={group}
-            style={[
-              styles.groupBtn,
-              selectedGroup === group && styles.activeGroupBtn
-            ]}
-            onPress={() => { 
-              setSelectedGroup(group);
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-            }}
-          >
-            <Text style={[styles.groupBtnText, selectedGroup === group && styles.activeGroupText]}>{group}</Text>
-          </TouchableOpacity>
-        ))}
-      </View>
+          {/* Exercise Cards */}
+          {filteredExercises.map((exercise, index) => (
+            <View key={index} style={styles.card}>
+              <Image source={exercise.image} style={styles.cardImage} />
+              <Text style={styles.cardTitle}>{exercise.name}</Text>
+              <TouchableOpacity style={styles.infoBtn} onPress={() => {
+                setExpandedCardIndex(expandedCardIndex === index ? null : index)
+                Haptics.selectionAsync();
+              }}>
+                <Text style={styles.cardText}>{expandedCardIndex === index ? "-" : "?"}</Text>
+              </TouchableOpacity>
+              {expandedCardIndex === index && (
+                <Text style={styles.infoText}>{exercise.instructions || "No intructions available"}</Text>
+              )}
+            </View>
+          ))}
 
-      {/* Exercise Cards */}
-      {filteredExercises.map((exercise, index) => (
-        <View key={index} style={styles.card}>
-          <Image source={exercise.image} style={styles.cardImage} />
-          <Text style={styles.cardTitle}>{exercise.name}</Text>
-          <TouchableOpacity style={styles.infoBtn} onPress={() => { 
-            setExpandedCardIndex(expandedCardIndex === index ? null : index)
-            Haptics.selectionAsync();
-            }}>
-            <Text style={styles.cardText}>{expandedCardIndex === index ? "-" : "?"}</Text>
-          </TouchableOpacity>
-          {expandedCardIndex === index && (
-              <Text style={styles.infoText}>{exercise.instructions || "No intructions available"}</Text>
-            )}
         </View>
-      ))}
-
-    </View>
-
-    </ImageBackground>
 
     </ScrollView>
   );

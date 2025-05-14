@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -78,7 +78,16 @@ const History = () => {
 
           <TouchableOpacity
             style={styles.removeBtn}
-            onPress={() => removeWorkoutFromHistory(workout)}
+            onPress={() => {
+              Alert.alert(
+                "Remove Workout", 
+                "Are you sure you want to remove this workout?",
+                [
+                  { text: "Cancel", style: "cancel"},
+                  { text: "Remove", style: "destructive", onPress: () => removeWorkoutFromHistory(workout)}
+                ]
+              )
+            }}
           >
             <Text style={styles.removeText}>Remove Workout</Text>
           </TouchableOpacity>

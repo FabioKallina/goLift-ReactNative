@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native'
 import React, { useState } from 'react'
 
 import { exercises } from "@/constants/exercises"
@@ -40,9 +40,18 @@ const SetCard = ({ exercise, sets, onUpdateSets, onRemove }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.headerText}>{exercise.name}</Text>
-            
-            <TouchableOpacity style={styles.closeExerciseBtn} onPress={onRemove}>
-                <Ionicons name="close" size={30} color="rgb(255, 0, 0)" />
+
+            <TouchableOpacity style={styles.closeExerciseBtn} onPress={() => {
+                Alert.alert(
+                    "Delete Exercise",
+                    "Are you sure you want to delete this exercise?",
+                    [
+                        { text: "Cancel", style: "cancel"},
+                        { text: "Delete", style: "destructive", onPress: onRemove}
+                    ]
+                )
+            }}>
+                <Ionicons name="close" size={28} color="#888" />
             </TouchableOpacity>
 
             <SwipeListView
@@ -138,8 +147,8 @@ const styles = StyleSheet.create({
         position: "absolute",
         top: 15,
         right: 10,
-        backgroundColor: "rgba(255, 0, 0, 0.3)",
-        borderRadius: 5,
+        backgroundColor: "#222",
+        borderRadius: 8,
     },
     inputPair: {
         flexDirection: "row",

@@ -1,16 +1,34 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View, ImageBackground, Switch } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import { images } from '@/constants/images'
 
+import AsyncStorage from '@react-native-async-storage/async-storage'
+
 const Profile = () => {
+
+  const [workoutsCount, setWorkoutsCount] = useState(0);
+
+  const fetchWorkouts = async () => {
+    try {
+      const storedWorkouts = await AsyncStorage.getItem("workoutHistory");
+      const parsedWorkouts = storedWorkouts ? JSON.parse(storedWorkouts) : [];
+      setWorkoutsCount(parsedWorkouts.length)
+    } catch (e) {
+      console.error("Failed fetching workouts", e)
+    }
+  }
+
+  useEffect(() => {
+    fetchWorkouts();
+  }, [])
 
   return (
 
     <View style={styles.container}>
     <Image source={images.defaultProfile} style={styles.image} />
     <Text style={styles.profileText}>John Doe</Text>
-    <Text style={styles.text}>304 Workouts</Text>
+    <Text style={styles.text}>{workoutsCount} Workouts</Text>
     
     <TouchableOpacity style={styles.loginBtn}>
       <Text style={styles.loginText}>Log In</Text>

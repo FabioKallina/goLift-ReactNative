@@ -5,9 +5,12 @@ import { images } from '@/constants/images'
 
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
+import { useColorTheme } from "@/context/ColorThemeContext";
+
 const Profile = () => {
 
   const [workoutsCount, setWorkoutsCount] = useState(0);
+  const { colorTheme, toggleTheme } = useColorTheme();
 
   const fetchWorkouts = async () => {
     try {
@@ -30,9 +33,17 @@ const Profile = () => {
     <Text style={styles.profileText}>John Doe</Text>
     <Text style={styles.text}>{workoutsCount} Workouts</Text>
     
-    <TouchableOpacity style={styles.loginBtn}>
+    <TouchableOpacity style={[styles.loginBtn, colorTheme && styles.colorLoginBtn]}>
       <Text style={styles.loginText}>Log In</Text>
     </TouchableOpacity>
+
+    <View style={{ marginTop: 20, flexDirection: "row"}}>
+      <Text style={{color: "#fff", fontSize: 24}}>Carolina Blue: </Text>
+      <Switch 
+      value={colorTheme}
+      onValueChange={toggleTheme}
+    />
+    </View>
 
   </View>
 );
@@ -75,5 +86,8 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 50,
     borderRadius: 10,
+  },
+  colorLoginBtn: {
+    backgroundColor: "#7bafd4"
   },
 });

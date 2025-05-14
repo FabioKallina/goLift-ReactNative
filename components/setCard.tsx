@@ -7,8 +7,12 @@ import { Ionicons } from '@expo/vector-icons'
 import * as Haptics from "expo-haptics"
 import { SwipeListView } from 'react-native-swipe-list-view';
 
+import { useColorTheme } from '@/context/ColorThemeContext'
+
 
 const SetCard = ({ exercise, sets, onUpdateSets, onRemove }) => {
+
+    const { colorTheme } = useColorTheme();
 
     const handleAddSet = () => {
         const newSets = [
@@ -39,7 +43,7 @@ const SetCard = ({ exercise, sets, onUpdateSets, onRemove }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.headerText}>{exercise.name}</Text>
+            <Text style={[styles.headerText, colorTheme && styles.colorHeaderText]}>{exercise.name}</Text>
 
             <TouchableOpacity style={styles.closeExerciseBtn} onPress={() => {
                 Alert.alert(
@@ -120,7 +124,7 @@ const SetCard = ({ exercise, sets, onUpdateSets, onRemove }) => {
 
 
             <TouchableOpacity style={styles.addSetBtn} onPress={handleAddSet}>
-                <Ionicons name="add" size={28} color="#FF9500" style={{ alignSelf: "center" }} />
+                <Ionicons name="add" size={28} color={ colorTheme ? "#72c9f2" : "#FF9500"} style={{ alignSelf: "center" }} />
             </TouchableOpacity>
 
         </View>
@@ -236,6 +240,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         borderTopRightRadius: 5,
         borderBottomRightRadius: 5,
+    },
+    colorHeaderText: {
+        color: "#7bafd4"
     },
 
 })

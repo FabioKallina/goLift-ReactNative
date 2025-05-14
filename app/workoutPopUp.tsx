@@ -13,7 +13,12 @@ import { router } from 'expo-router';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { useColorTheme } from '@/context/ColorThemeContext';
+
 const WorkoutPopUp = () => {
+
+    const { colorTheme } = useColorTheme();
+
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedExercise, setSelectedExercise] = useState<Exercise[]>([]);
     const [showSearch, setShowSearch] = useState(false);
@@ -146,7 +151,7 @@ const WorkoutPopUp = () => {
                                         setSearchTerm("");
                                     }}
                                 >
-                                    <Text style={styles.addButton}>+ Add</Text>
+                                    <Text style={[styles.addButton, colorTheme && styles.colorAddButton]}>+ Add</Text>
                                 </TouchableOpacity>
                             </View>
                         )}
@@ -178,13 +183,13 @@ const WorkoutPopUp = () => {
 
             <View style={{ justifyContent: "center", alignItems: "center" }}>
                 <TouchableOpacity
-                    style={styles.addExerciseBtn}
+                    style={[styles.addExerciseBtn, colorTheme && styles.colorAddExerciseBtn]}
                     onPress={() => {
                         handleAddSet();
                         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
                     }}
                 >
-                    <Text style={{ color: "#FF9500", fontSize: 28, alignSelf: "center" }}>
+                    <Text style={[styles.addExerciseBtnText, colorTheme && styles.colorAddExerciseBtnText]}>
                         Add Exercise
                     </Text>
                 </TouchableOpacity>
@@ -269,6 +274,11 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         marginVertical: 10,
     },
+    addExerciseBtnText: {
+        color: "#FF9500", 
+        fontSize: 28, 
+        alignSelf: "center"
+    },
     searchResult: {
         flexDirection: "row",
         justifyContent: "space-between",
@@ -294,5 +304,17 @@ const styles = StyleSheet.create({
         color: "#E34234",
         fontSize: 28,
         alignSelf: "center",
+    },
+    colorAddExerciseBtn: {
+        backgroundColor: "rgba(123, 175, 212, 0.3)",
+        width: "90%",
+        borderRadius: 20,
+        marginVertical: 10,
+    },
+    colorAddExerciseBtnText: {
+        color: "#7bafd4"
+    },
+    colorAddButton: {
+        color: "#7bafd4"
     },
 });

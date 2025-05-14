@@ -1,29 +1,32 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React, { useState } from 'react'
 
-import WorkoutPopUp from '@/app/workoutPopUp'
-
 import * as Haptics from "expo-haptics"
-import { Link } from 'expo-router'
+
+import { useColorTheme } from "@/context/ColorThemeContext";
+
+import { useRouter } from "expo-router";
 
 const Search = () => {
-
-  const [popUp, setPopUp] = useState(false);
+  const router = useRouter();
+  const { colorTheme } = useColorTheme();
 
   return (
     <View style={styles.container}>
-      <Text style={{ fontSize: 30, color: "white", justifyContent: "center", alignContent: "center" }}>Start Your Workout</Text>
+      <Text style={{ fontSize: 30, color: "white" }}>Start Your Workout</Text>
 
-      <Link href="/workoutPopUp" asChild>
-        <TouchableOpacity style={styles.workoutBtn} onPress={() => {
+      <TouchableOpacity
+        style={[styles.workoutBtn, colorTheme && styles.colorStartBtn]}
+        onPress={() => {
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
-        }}>
-          <Text style={styles.workoutBtnText}>Quick Start</Text>
-        </TouchableOpacity>
-      </Link>
+          router.push("/workoutPopUp");
+        }}
+      >
+        <Text style={styles.workoutBtnText}>Quick Start</Text>
+      </TouchableOpacity>
     </View>
-  )
-}
+  );
+};
 
 export default Search
 
@@ -53,5 +56,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     color: "black"
+  },
+  colorStartBtn: {
+    backgroundColor: "#7bafd4",
   },
 })

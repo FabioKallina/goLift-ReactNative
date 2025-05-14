@@ -3,11 +3,16 @@ import React from 'react'
 
 import { Ionicons } from "@expo/vector-icons";
 
+import { useColorTheme } from '@/context/ColorThemeContext';
+
 const SearchBar = ({ value, onChangeText }) => {
+
+  const { colorTheme } = useColorTheme();
+
   return (
     <View style={{ flexDirection: "row", justifyContent: "center"}}>
         <TextInput style={styles.input} placeholder="Search for an exercise..." placeholderTextColor="#888" value={value} onChangeText={onChangeText}/>
-        <TouchableOpacity style={styles.searchBtn}>
+        <TouchableOpacity style={[styles.searchBtn, colorTheme && styles.colorSearchBtn]}>
           <Ionicons name="search" size={29} color="#000"/>
         </TouchableOpacity>
       </View>
@@ -40,5 +45,8 @@ const styles = StyleSheet.create({
         paddingLeft: 15,
         borderTopRightRadius: 30,
         borderBottomRightRadius: 30,
+      },
+      colorSearchBtn: {
+        backgroundColor: "#7bafd4"
       },
 })

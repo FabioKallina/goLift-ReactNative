@@ -7,9 +7,13 @@ import { images } from "@/constants/images";
 
 import * as Haptics from 'expo-haptics'; //Haptic feedback
 
+import { useColorTheme } from "@/context/ColorThemeContext";
+
 const muscleGroups = ["chest", "back", "legs", "abs", "biceps", "triceps", "shoulders"];
 
 export default function Index() {
+
+  const { colorTheme } = useColorTheme();
 
   const [selectedGroup, setSelectedGroup] = useState("chest");
   const [expandedCardIndex, setExpandedCardIndex] = useState<number | null>(null);
@@ -21,48 +25,50 @@ export default function Index() {
   return (
     <ScrollView style={{ flex: 1 }} bounces={false}>
 
-        <View style={styles.container}>
+      <View style={styles.container}>
 
-          <Text style={styles.headerText}>Go Lift</Text>
-          <Image source={icons.gym} style={styles.logo} />
+        <Text style={styles.headerText}>Go Lift</Text>
+        <Image source={icons.gym} style={styles.logo} />
 
-          {/* Muscle group buttons*/}
-          <View style={styles.groupButtons}>
-            {muscleGroups.map(group => (
-              <TouchableOpacity
+        {/* Muscle group buttons*/}
+        <View style={styles.groupButtons}>
+          {muscleGroups.map(group => (
+            <TouchableOpacity
               key={group}
               style={[
                 styles.groupBtn,
-                selectedGroup === group && styles.activeGroupBtn, 
-               ]}
-                onPress={() => {
-                  setSelectedGroup(group);
-                  Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                }}
-              >
-                <Text style={[styles.groupBtnText, selectedGroup === group && styles.activeGroupText]}>{group}</Text>
-              </TouchableOpacity>
-            ))}
-          </View>
-
-          {/* Exercise Cards */}
-          {filteredExercises.map((exercise, index) => (
-            <View key={index} style={styles.card}>
-              <Image source={exercise.image} style={styles.cardImage} />
-              <Text style={styles.cardTitle}>{exercise.name}</Text>
-              <TouchableOpacity style={styles.infoBtn} onPress={() => {
-                setExpandedCardIndex(expandedCardIndex === index ? null : index)
-                Haptics.selectionAsync();
-              }}>
-                <Text style={styles.cardText}>{expandedCardIndex === index ? "-" : "?"}</Text>
-              </TouchableOpacity>
-              {expandedCardIndex === index && (
-                <Text style={styles.infoText}>{exercise.instructions || "No intructions available"}</Text>
-              )}
-            </View>
+                selectedGroup === group && {
+                  backgroundColor: colorTheme ? "#7bafd4" : "#FF9500", // Light or dark active color
+                }
+              ]}
+              onPress={() => {
+                setSelectedGroup(group);
+                Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+              }}
+            >
+              <Text style={[styles.groupBtnText, selectedGroup === group && styles.activeGroupText]}>{group}</Text>
+            </TouchableOpacity>
           ))}
-
         </View>
+
+        {/* Exercise Cards */}
+        {filteredExercises.map((exercise, index) => (
+          <View key={index} style={styles.card}>
+            <Image source={exercise.image} style={styles.cardImage} />
+            <Text style={styles.cardTitle}>{exercise.name}</Text>
+            <TouchableOpacity style={[styles.infoBtn, colorTheme && styles.colorInfoBtn]} onPress={() => {
+              setExpandedCardIndex(expandedCardIndex === index ? null : index)
+              Haptics.selectionAsync();
+            }}>
+              <Text style={styles.cardText}>{expandedCardIndex === index ? "-" : "?"}</Text>
+            </TouchableOpacity>
+            {expandedCardIndex === index && (
+              <Text style={styles.infoText}>{exercise.instructions || "No intructions available"}</Text>
+            )}
+          </View>
+        ))}
+
+      </View>
 
     </ScrollView>
   );
@@ -108,7 +114,7 @@ const styles = StyleSheet.create({
   },
   activeGroupBtn: {
     backgroundColor: "#FF9500",
-    color: "black",
+    color: "#000"
   },
   activeGroupText: {
     color: "black"
@@ -160,6 +166,9 @@ const styles = StyleSheet.create({
     color: "#fff",
     marginTop: 10,
     fontSize: 16,
-  }
+  },
+  colorInfoBtn: {
+    backgroundColor: "#7bafd4"
+  },
 
 })

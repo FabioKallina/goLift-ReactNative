@@ -2,9 +2,11 @@ import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Alert } from 'rea
 import React, { useEffect, useState } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { useColorTheme } from '@/context/ColorThemeContext';
 
 const History = () => {
 
+  const { colorTheme } = useColorTheme();
 
   const [history, setHistory] = useState([]);
 
@@ -61,7 +63,7 @@ const History = () => {
 
       {history.map((workout, index) => (
         <View key={index} style={styles.historyCard}>
-          <Text style={styles.date}>
+          <Text style={[styles.date, colorTheme && styles.colorDate]}>
             {formatDate(new Date(workout.date))} - {formatTime(workout.timeElapsed)}min
           </Text>
           
@@ -148,5 +150,10 @@ const styles = StyleSheet.create({
   removeText: {
     color: "#E34234",
     fontWeight: "semibold",
+  },
+  colorDate: {
+    color: "#7bafd4",
+    fontSize: 20,
+    marginBottom: 10,
   },
 });

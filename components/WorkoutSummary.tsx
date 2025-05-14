@@ -4,6 +4,8 @@ import React from 'react'
 import { useRouter } from 'expo-router'
 import { Ionicons } from '@expo/vector-icons';
 
+import { useColorTheme } from '@/context/ColorThemeContext';
+
 const router = useRouter();
 
 type Set = {
@@ -24,6 +26,8 @@ type WorkoutSummaryProps = {
 }
 
 const WorkoutSummary = ({ summary, date, timeElapsed, onClose }: WorkoutSummaryProps) => {
+
+    const { colorTheme } = useColorTheme();
 
     const formatTime = (seconds: number) => {
         const mins = Math.floor(seconds / 60);
@@ -57,7 +61,7 @@ const WorkoutSummary = ({ summary, date, timeElapsed, onClose }: WorkoutSummaryP
                 <ScrollView style={styles.summaryList}>
                     {summary.map((exercise, idx) => (
                         <View key={idx} style={styles.exercise}>
-                            <Text style={styles.exerciseName}>{exercise.name}</Text>
+                            <Text style={[styles.exerciseName, colorTheme && styles.colorExerciseName]}>{exercise.name}</Text>
                             {exercise.sets.map((set, i) => (
                                 <Text key={i} style={styles.setText}>
                                     {set.weight}lbs x {set.reps} reps
@@ -139,5 +143,8 @@ const styles = StyleSheet.create({
     closeText: {
         color: "#FF9500",
         fontWeight: "bold",
+    },
+    colorExerciseName: {
+        color: "#7bafd4"
     },
 });

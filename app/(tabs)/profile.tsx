@@ -37,8 +37,8 @@ const Profile = () => {
       <Text style={styles.loginText}>Log In</Text>
     </TouchableOpacity>
 
-    <View style={{ marginTop: 20, flexDirection: "row"}}>
-      <Text style={{color: "#fff", fontSize: 24}}>Carolina Blue: </Text>
+    <View style={{ marginTop: 30, flexDirection: "row", gap: 10}}>
+      <Text style={{color: "#fff", fontSize: 24}}>Carolina Blue</Text>
       <Switch 
       value={colorTheme}
       onValueChange={toggleTheme}

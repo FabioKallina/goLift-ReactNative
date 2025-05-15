@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
-import React from 'react'
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { useEffect } from "react";
 
 import * as Haptics from "expo-haptics"
+import * as Notifications from "expo-notifications";
 
 import { useColorTheme } from "@/context/ColorThemeContext";
 
@@ -11,14 +12,35 @@ const Search = () => {
   const router = useRouter();
   const { colorTheme } = useColorTheme();
 
+  useEffect(() => {
+    const requestPermission = async () => {
+      const { status } = await Notifications.requestPermissionsAsync();
+      if (status != "granted") {
+        alert("Permission for notifications for granted!")
+      }
+    };
+
+    requestPermission();
+  }, []);
+
+
   return (
     <View style={styles.container}>
       <Text style={{ fontSize: 30, color: "white" }}>Start Your Workout</Text>
 
       <TouchableOpacity
         style={[styles.workoutBtn, colorTheme && styles.colorStartBtn]}
-        onPress={() => {
+        onPress={async () => {
           Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
+
+          await Notifications.scheduleNotificationAsync({
+            content: {
+              title: "Workout Started!",
+              body: "Crush your workout 💥",
+            },
+            trigger: null,
+          });
+
           router.push("/workoutPopUp");
         }}
       >

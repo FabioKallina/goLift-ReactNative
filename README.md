@@ -91,7 +91,7 @@ npm install
 ```bash
 npx expo start
 ```
-- Mobile usage: you will need to download the Expo Go App from the App/Google Play Store
+- 📲 Mobile usage: you will need to download the Expo Go App from the App/Google Play Store
 
 - 📱 On iPhone: scan the QR code using the Camera app
 - 🤖 On Android: scan with the Expo Go app

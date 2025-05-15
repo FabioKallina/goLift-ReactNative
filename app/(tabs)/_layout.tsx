@@ -1,11 +1,9 @@
 
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useContext } from 'react'
+import { Text } from 'react-native'
+import React from 'react'
 import { Tabs } from 'expo-router'
 
 import { Ionicons } from "@expo/vector-icons";
-
-import * as Haptics from "expo-haptics";
 
 import { useColorTheme } from '@/context/ColorThemeContext';
 
@@ -54,12 +52,6 @@ const _layout = () => {
                         </Text>
                     )
                 }}
-            /*
-            listeners={{
-                tabPress: () => {
-                    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
-                }
-            }} */
             />
             <Tabs.Screen
                 name="search"
@@ -147,14 +139,3 @@ const _layout = () => {
 }
 
 export default _layout
-
-const styles = StyleSheet.create({
-    image: {
-        width: 24,
-        height: 24,
-        tintColor: "rgba(93, 204, 255, 1)"
-    },
-    text: {
-        fontSize: 12,
-    }
-})

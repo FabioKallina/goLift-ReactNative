@@ -1,9 +1,8 @@
-import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Image, ImageBackground, Button, BackHandler } from "react-native";
+import { Text, View, ScrollView, StyleSheet, TouchableOpacity, Image } from "react-native";
 import { useState } from "react";
 
 import { icons } from '@/constants/icons';
 import { exercises } from "@/constants/exercises";
-import { images } from "@/constants/images";
 
 import * as Haptics from 'expo-haptics'; //Haptic feedback
 

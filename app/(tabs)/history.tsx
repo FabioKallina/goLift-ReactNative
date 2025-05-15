@@ -4,11 +4,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { useColorTheme } from '@/context/ColorThemeContext';
 
+import { Workout } from '@/types/workout';
+
 const History = () => {
 
   const { colorTheme } = useColorTheme();
 
-  const [history, setHistory] = useState([]);
+  const [history, setHistory] = useState<Workout[]>([]);
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -39,7 +41,7 @@ const History = () => {
     });
   };
 
-  const removeWorkoutFromHistory = async (workoutToRemove) => {
+  const removeWorkoutFromHistory = async (workoutToRemove: Workout) => {
     try {
       const storedHistory = await AsyncStorage.getItem('workoutHistory');
       const history = storedHistory ? JSON.parse(storedHistory) : [];

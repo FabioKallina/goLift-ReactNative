@@ -9,8 +9,10 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 
 import { useColorTheme } from '@/context/ColorThemeContext'
 
+import { SetCardProps, ExerciseSet } from '@/types/workout'
 
-const SetCard = ({ exercise, sets, onUpdateSets, onRemove }) => {
+
+const SetCard: React.FC<SetCardProps> = ({ exercise, sets, onUpdateSets, onRemove }) => {
 
     const { colorTheme } = useColorTheme();
 
@@ -23,18 +25,18 @@ const SetCard = ({ exercise, sets, onUpdateSets, onRemove }) => {
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     }
 
-    const handleDeleteSet = (index) => {
+    const handleDeleteSet = (index: number) => {
         const updatedSets = sets.filter((_, i) => i !== index);
         onUpdateSets(updatedSets);
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
     };
 
-    const handleChange = (index, field, value) => {
+    const handleChange = (index: number, field: "weight" | "reps", value: string) => {
         const updatedSets = [...sets]
         updatedSets[index][field] = value;
         onUpdateSets(updatedSets);
     }
-    const handleConfirm = (index) => {
+    const handleConfirm = (index: number) => {
         const updatedSets = [...sets]
         updatedSets[index].completed = !updatedSets[index].completed;
         onUpdateSets(updatedSets);

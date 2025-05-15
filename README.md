@@ -58,8 +58,9 @@ goLift/
 │   
 ├── interfaces/
 │   └── interface.d.js
-│   │
+│   
 ├── types/
+│   ├── workout.ts
 │   └── images.d.js
 │   
 ├── .gitignore
